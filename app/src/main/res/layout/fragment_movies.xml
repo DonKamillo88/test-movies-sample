@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppTheme.Toolbar"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextAppearance="@style/AppTheme.Toolbar.Title">
+
+
+            <android.support.v7.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="10dp"
+                android:queryHint="@string/search" />
+        </android.support.v7.widget.Toolbar>
+
+
+        <!--<View-->
+        <!--android:id="@+id/progress"-->
+        <!--android:layout_width="250dp"-->
+        <!--android:layout_height="2dp"-->
+        <!--android:layout_below="@+id/top"-->
+        <!--android:background="@color/colorAccent"-->
+        <!--android:visibility="gone" />-->
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top"
+        android:scrollbars="vertical" />
+
+
+</RelativeLayout><!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent" >-->
+
+    <!--<android.support.design.widget.AppBarLayout--><!--android:id="@+id/top"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:fitsSystemWindows="true">-->
+
+
+    <!--<android.support.v7.widget.Toolbar--><!--android:id="@+id/toolbar"--><!--android:layout_width="match_parent"--><!--android:layout_height="?attr/actionBarSize"--><!--android:background="?attr/colorPrimary"--><!--android:theme="@style/AppTheme.Toolbar"--><!--app:layout_scrollFlags="scroll|enterAlways"--><!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"--><!--app:titleTextAppearance="@style/AppTheme.Toolbar.Title">-->
+
+
+    <!--<android.support.v7.widget.SearchView--><!--android:id="@+id/search_view"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_gravity="end"--><!--android:padding="10dp"--><!--android:queryHint="@string/search" />--><!--</android.support.v7.widget.Toolbar>-->
+
+
+    <!--&lt;!&ndash;<View&ndash;&gt;--><!--&lt;!&ndash;android:id="@+id/progress"&ndash;&gt;--><!--&lt;!&ndash;android:layout_width="250dp"&ndash;&gt;--><!--&lt;!&ndash;android:layout_height="2dp"&ndash;&gt;--><!--&lt;!&ndash;android:layout_below="@+id/top"&ndash;&gt;--><!--&lt;!&ndash;android:background="@color/colorAccent"&ndash;&gt;--><!--&lt;!&ndash;android:visibility="gone" />&ndash;&gt;-->
+
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <!--<android.support.v7.widget.RecyclerView--><!--android:id="@+id/movies"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent" />-->
+
+    <!--</android.support.constraint.ConstraintLayout>-->
