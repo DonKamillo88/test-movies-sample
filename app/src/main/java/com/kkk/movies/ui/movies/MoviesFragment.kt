@@ -1,8 +1,11 @@
 package com.kkk.movies.ui.movies
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_movies.*
 class MoviesFragment : Fragment(), MoviesMVP.View {
 
     val adapter = MoviesAdapter(arrayListOf())
-    val moviesPresenter: MoviesMVP.Presenter<MoviesMVP.View> = MoviesPresenter()
+    private val moviesPresenter: MoviesMVP.Presenter<MoviesMVP.View> = MoviesPresenter()
 
     companion object {
         val TAG = MoviesFragment::class.java.simpleName
@@ -36,6 +39,8 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
         super.onActivityCreated(savedInstanceState)
 
         init()
+        createSearchViewMenuItem()
+
         moviesPresenter.initPresenter(this, context?.cacheDir)
     }
 
@@ -48,8 +53,25 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
         movies.layoutManager = GridLayoutManager(context, 3)
         movies.hasFixedSize()
         movies.adapter = adapter
-        movies.setItemViewCacheSize(20);
+        movies.setItemViewCacheSize(20)
 
+    }
+
+
+    private fun createSearchViewMenuItem() {
+        val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+        })
+        search_view.setSearchableInfo(searchManager.getSearchableInfo(activity!!.componentName))
     }
 
 }
