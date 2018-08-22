@@ -2,6 +2,7 @@ package com.kkk.movies.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
 import com.kkk.movies.R
@@ -25,16 +26,28 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
+import android.support.v7.widget.GridLayoutManager
+
+
 
 class MainActivity : AppCompatActivity() {
+    val adapter = MoviesAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        button.setOnClickListener { loadMovies() }
+        init()
+        loadMovies()
     }
 
+    private fun init() {
+        movies.layoutManager = GridLayoutManager(this, 3)
+        movies.hasFixedSize()
+        movies.adapter = adapter
+//        movies.setItemViewCacheSize(20);
+
+    }
 
     fun loadMovies() {
 
@@ -46,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         val networkCacheInterceptor = Interceptor { chain ->
             val response = chain.proceed(chain.request())
 
-            var cacheControl = CacheControl.Builder()
+            val cacheControl = CacheControl.Builder()
                     .maxAge(CACHE_MAX_AGE, TimeUnit.MINUTES)
                     .build()
 
@@ -88,7 +101,6 @@ class MainActivity : AppCompatActivity() {
                 .subscribeWith(object : DisposableObserver<Response<MoviesData>>() {
                     override fun onNext(response: Response<MoviesData>) {
 
-
                         if (response.raw().cacheResponse() != null) {
                             Log.e("Network", "response came from cache")
                         }
@@ -97,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                             Log.e("Network", "response came from server")
                         }
 
-                        Toast.makeText(applicationContext, response.body()?.data?.get(2)?.title, Toast.LENGTH_SHORT).show()
+                        response.body()?.data?.let { adapter.updateData(it) }
                     }
 
                     override fun onComplete() {
