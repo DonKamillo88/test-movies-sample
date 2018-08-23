@@ -16,7 +16,7 @@ import retrofit2.Response
 
 class MoviePresenterTest {
 
-    private lateinit var SUT: MoviesMVP.Presenter<MoviesMVP.View>
+    private lateinit var SUT: MoviesMVP.Presenter
     private var moviesService = Mockito.mock(MoviesService::class.java)
     private var mView: MoviesMVP.View = Mockito.mock(MoviesMVP.View::class.java)
 

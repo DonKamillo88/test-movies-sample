@@ -9,7 +9,7 @@ import retrofit2.Response
 /**
  * @author DonKamillo on 22.08.2018.
  */
-class MoviesPresenter : MoviesMVP.Presenter<MoviesMVP.View> {
+class MoviesPresenter : MoviesMVP.Presenter {
 
     lateinit var moviesService: MoviesService
     lateinit var view: MoviesMVP.View
@@ -49,4 +49,5 @@ class MoviesPresenter : MoviesMVP.Presenter<MoviesMVP.View> {
         moviesService.getMovies(handler)
 
     }
+
 }

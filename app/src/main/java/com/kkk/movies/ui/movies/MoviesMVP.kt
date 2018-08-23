@@ -12,7 +12,7 @@ interface MoviesMVP {
         fun onShowMovies(data: List<Movie>)
     }
 
-    interface Presenter<T> {
-        fun initPresenter(view: T, moviesService: MoviesService)
+    interface Presenter {
+        fun initPresenter(view: MoviesMVP.View, moviesService: MoviesService)
     }
 }

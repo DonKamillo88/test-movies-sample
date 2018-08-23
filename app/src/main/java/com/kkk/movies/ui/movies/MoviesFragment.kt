@@ -11,21 +11,35 @@ import android.view.View
 import android.view.ViewGroup
 import com.kkk.movies.R
 import com.kkk.movies.data.model.Movie
+import com.kkk.movies.data.remote.MoviesApi
 import com.kkk.movies.data.remote.MoviesService
+import com.kkk.movies.ui.MyApplication
 import com.kkk.movies.utils.CACHE_ITEMS
 import kotlinx.android.synthetic.main.fragment_movies.*
+import javax.inject.Inject
 
 /**
  * @author DonKamillo on 22.08.2018.
  */
 class MoviesFragment : Fragment(), MoviesMVP.View {
 
+    @Inject
+    lateinit var moviesPresenter: MoviesMVP.Presenter
+
+    @Inject
+    lateinit var moviesApi: MoviesApi
+
     val adapter = MoviesAdapter(arrayListOf())
-    private val moviesPresenter: MoviesMVP.Presenter<MoviesMVP.View> = MoviesPresenter()
 
     companion object {
         val TAG = MoviesFragment::class.java.simpleName
         fun newInstance() = MoviesFragment()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        MyApplication.graph.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,7 +52,7 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
         init()
         createSearchViewMenuItem()
 
-        moviesPresenter.initPresenter(this, MoviesService(context?.cacheDir))
+        moviesPresenter.initPresenter(this, MoviesService(moviesApi))
     }
 
     override fun onShowMovies(data: List<Movie>) {
