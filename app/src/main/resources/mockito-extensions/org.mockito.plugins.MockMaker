@@ -1,0 +1,3 @@
+# https://github.com/mockito/mockito/wiki/What%27s-new-in-Mockito-2
+# Enabling mock of final classes
+mock-maker-inline

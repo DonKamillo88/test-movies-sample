@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kkk.movies.R
 import com.kkk.movies.data.model.Movie
+import com.kkk.movies.data.remote.MoviesService
 import com.kkk.movies.utils.CACHE_ITEMS
 import kotlinx.android.synthetic.main.fragment_movies.*
 
@@ -38,7 +38,7 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
         init()
         createSearchViewMenuItem()
 
-        moviesPresenter.initPresenter(this, context?.cacheDir)
+        moviesPresenter.initPresenter(this, MoviesService(context?.cacheDir))
     }
 
     override fun onShowMovies(data: List<Movie>) {

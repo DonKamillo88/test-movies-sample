@@ -1,7 +1,7 @@
 package com.kkk.movies.ui.movies
 
 import com.kkk.movies.data.model.Movie
-import java.io.File
+import com.kkk.movies.data.remote.MoviesService
 
 /**
  * @author DonKamillo on 22.08.2018.
@@ -13,6 +13,6 @@ interface MoviesMVP {
     }
 
     interface Presenter<T> {
-        fun initPresenter(view: T, cacheDir: File?)
+        fun initPresenter(view: T, moviesService: MoviesService)
     }
 }
