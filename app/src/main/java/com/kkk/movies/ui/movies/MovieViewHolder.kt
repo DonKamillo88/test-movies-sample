@@ -1,4 +1,4 @@
-package com.kkk.movies.ui
+package com.kkk.movies.ui.movies
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

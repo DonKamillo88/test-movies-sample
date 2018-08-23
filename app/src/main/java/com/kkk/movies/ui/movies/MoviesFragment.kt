@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.kkk.movies.R
 import com.kkk.movies.data.model.Movie
-import com.kkk.movies.ui.MoviesAdapter
+import com.kkk.movies.utils.CACHE_ITEMS
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 /**
@@ -29,10 +29,7 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.fragment_movies, container, false)
-        Log.e(TAG, " onCreateView")
-
-        return view
+        return inflater.inflate(R.layout.fragment_movies, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -45,7 +42,6 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
     }
 
     override fun onShowMovies(data: List<Movie>) {
-        Log.e(TAG, " onShowMovies")
         adapter.updateData(data)
     }
 
@@ -53,7 +49,7 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
         movies.layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.movies_columns))
         movies.hasFixedSize()
         movies.adapter = adapter
-        movies.setItemViewCacheSize(20)
+        movies.setItemViewCacheSize(CACHE_ITEMS)
     }
 
     private fun createSearchViewMenuItem() {

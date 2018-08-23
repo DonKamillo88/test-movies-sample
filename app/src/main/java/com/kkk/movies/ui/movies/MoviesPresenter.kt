@@ -36,7 +36,7 @@ class MoviesPresenter : MoviesMVP.Presenter<MoviesMVP.View> {
         loadMovies()
     }
 
-    fun loadMovies() {
+    private fun loadMovies() {
 
         // Create a cache object
         val httpCacheDirectory = File(cacheDir, "http-cache")
@@ -79,9 +79,6 @@ class MoviesPresenter : MoviesMVP.Presenter<MoviesMVP.View> {
         // Build the moviesApi with Retrofit and do the network request
         val moviesApi = retrofit.create(MoviesApi::class.java)
 
-
-
-
         moviesApi.getMoviesObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,18 +86,18 @@ class MoviesPresenter : MoviesMVP.Presenter<MoviesMVP.View> {
                     override fun onNext(response: Response<MoviesData>) {
 
                         if (response.raw().cacheResponse() != null) {
-                            Log.e("Network", "response came from cache")
+                            Log.d("Network", "response came from cache")
                         }
 
                         if (response.raw().networkResponse() != null) {
-                            Log.e("Network", "response came from server")
+                            Log.d("Network", "response came from server")
                         }
 
                         response.body()?.data?.let { view.onShowMovies(it) }
                     }
 
                     override fun onComplete() {
-                        Log.e("Network", "onComplete")
+                        Log.d("Network", "onComplete")
                     }
 
                     override fun onError(e: Throwable) {

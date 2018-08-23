@@ -1,4 +1,4 @@
-package com.kkk.movies.ui
+package com.kkk.movies.ui.movies
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import com.kkk.movies.R
 import com.kkk.movies.data.model.Movie
+import com.kkk.movies.utils.movieSearchFilter
 
 /**
  * @author DonKamillo on 22.08.2018.
@@ -40,7 +41,7 @@ class MoviesAdapter(val movies: MutableList<Movie>) : RecyclerView.Adapter<Recyc
     private inner class ItemFilter : Filter() {
         override fun performFiltering(constraint: CharSequence): Filter.FilterResults {
             val filterString = constraint.toString().toLowerCase()
-            val filteredMovies = movies.filter { it.title.toLowerCase().contains(filterString) || it.genre.toLowerCase().contains(filterString) }
+            val filteredMovies = movies.filter { movieSearchFilter(it, filterString) }
             val results = Filter.FilterResults()
 
             results.values = filteredMovies
