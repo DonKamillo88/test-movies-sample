@@ -50,13 +50,11 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
     }
 
     private fun init() {
-        movies.layoutManager = GridLayoutManager(context, 3)
+        movies.layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.movies_columns))
         movies.hasFixedSize()
         movies.adapter = adapter
         movies.setItemViewCacheSize(20)
-
     }
-
 
     private fun createSearchViewMenuItem() {
         val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
