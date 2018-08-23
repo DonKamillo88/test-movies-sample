@@ -7,5 +7,5 @@ import com.kkk.movies.data.model.Movie
  */
 
 fun movieSearchFilter(movie: Movie, filterString: String): Boolean {
-    return movie.title.toLowerCase().contains(filterString) || movie.genre.toLowerCase().contains(filterString)
+    return movie.title.toLowerCase().contains(filterString.toLowerCase()) || movie.genre.toLowerCase().contains(filterString.toLowerCase())
 }
