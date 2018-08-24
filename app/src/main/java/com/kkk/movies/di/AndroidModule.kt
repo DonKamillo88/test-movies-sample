@@ -28,7 +28,7 @@ import javax.inject.Singleton
  * @author DonKamillo on 23.08.2018.
  */
 @Module
-class AndroidModule(private val application: Application) {
+open class AndroidModule(private val application: Context) {
 
     @Provides
     @Singleton
@@ -40,7 +40,7 @@ class AndroidModule(private val application: Application) {
     fun provideMoviesPresenter(): MoviesMVP.Presenter = MoviesPresenter()
 
     @Provides
-    internal fun provideMovies(converterFactory: Converter.Factory, callAdapterFactory: CallAdapter.Factory, httpClient: OkHttpClient): MoviesApi {
+    internal open fun provideMovies(converterFactory: Converter.Factory, callAdapterFactory: CallAdapter.Factory, httpClient: OkHttpClient): MoviesApi {
         return Retrofit.Builder()
                 .baseUrl(MOVIES_API_URL)
                 .addConverterFactory(converterFactory)

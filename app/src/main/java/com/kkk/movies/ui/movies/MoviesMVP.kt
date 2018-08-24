@@ -10,6 +10,7 @@ interface MoviesMVP {
 
     interface View {
         fun onShowMovies(data: List<Movie>)
+        fun onShowProgressBar(isShow : Boolean)
     }
 
     interface Presenter {

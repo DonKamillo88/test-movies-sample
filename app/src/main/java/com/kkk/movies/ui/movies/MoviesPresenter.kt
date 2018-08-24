@@ -22,7 +22,7 @@ class MoviesPresenter : MoviesMVP.Presenter {
     }
 
     private fun loadMovies() {
-
+        view.onShowProgressBar(true)
         val handler = object : DisposableObserver<Response<MoviesData>>() {
             override fun onNext(response: Response<MoviesData>) {
 
@@ -34,7 +34,10 @@ class MoviesPresenter : MoviesMVP.Presenter {
                     Log.d("Network", "response came from server")
                 }
 
-                response.body()?.data?.let { view.onShowMovies(it) }
+                response.body()?.data?.let {
+                    view.onShowProgressBar(false)
+                    view.onShowMovies(it)
+                }
             }
 
             override fun onComplete() {

@@ -59,6 +59,10 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
         adapter.updateData(data)
     }
 
+    override fun onShowProgressBar(isShow: Boolean) {
+        progressbar.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
     private fun init() {
         movies.layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.movies_columns))
         movies.hasFixedSize()
