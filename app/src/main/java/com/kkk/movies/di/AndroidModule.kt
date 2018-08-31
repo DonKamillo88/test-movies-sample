@@ -1,6 +1,5 @@
 package com.kkk.movies.di
 
-import android.app.Application
 import android.content.Context
 import com.kkk.movies.data.remote.MoviesApi
 import com.kkk.movies.ui.movies.MoviesMVP
@@ -57,11 +56,11 @@ open class AndroidModule(private val application: Context) {
         val httpCacheDirectory = File(application.cacheDir, "http-cache")
         val cache = Cache(httpCacheDirectory, CACHE_SIZE)
 
-        // create a network cache interceptor, setting the max age to 1 minute
+        // create a network cache interceptor, setting the max age
         val networkCacheInterceptor = Interceptor { chain ->
             val response = chain.proceed(chain.request())
 
-            var cacheControl = CacheControl.Builder()
+            val cacheControl = CacheControl.Builder()
                     .maxAge(CACHE_MAX_AGE, TimeUnit.MINUTES)
                     .build()
 
@@ -74,16 +73,11 @@ open class AndroidModule(private val application: Context) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-
-        val httpClient = OkHttpClient.Builder()
+        return OkHttpClient.Builder()
                 .cache(cache)
                 .addNetworkInterceptor(networkCacheInterceptor)
                 .addInterceptor(loggingInterceptor)
                 .build()
-
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        return OkHttpClient.Builder().addInterceptor(interceptor).build()
     }
 
 

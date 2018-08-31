@@ -1,15 +1,10 @@
 package com.kkk.movies.ui
 
-import android.location.LocationManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.kkk.movies.R
 import com.kkk.movies.ui.movies.MoviesFragment
-import com.kkk.movies.ui.movies.MoviesMVP
-import com.kkk.movies.ui.movies.MoviesPresenter
-import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
