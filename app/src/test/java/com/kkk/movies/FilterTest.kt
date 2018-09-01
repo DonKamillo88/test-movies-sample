@@ -9,7 +9,7 @@ import org.junit.Test
 
 
 class FilterTest {
-    val movie = Movie()
+    private val movie = Movie()
 
     @Before
     fun setUp() {

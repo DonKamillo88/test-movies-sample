@@ -11,8 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.kkk.movies.R
 import com.kkk.movies.data.model.Movie
-import com.kkk.movies.data.remote.MoviesApi
-import com.kkk.movies.data.remote.MoviesService
 import com.kkk.movies.ui.MyApplication
 import com.kkk.movies.utils.CACHE_ITEMS
 import kotlinx.android.synthetic.main.fragment_movies.*
@@ -26,9 +24,6 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
     @Inject
     lateinit var moviesPresenter: MoviesMVP.Presenter
 
-    @Inject
-    lateinit var moviesApi: MoviesApi
-
     val adapter = MoviesAdapter(arrayListOf())
 
     companion object {
@@ -39,7 +34,7 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        MyApplication.graph.inject(this)
+        MyApplication.appComponent.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,10 +47,17 @@ class MoviesFragment : Fragment(), MoviesMVP.View {
         init()
         createSearchViewMenuItem()
 
-        moviesPresenter.initPresenter(this, MoviesService(moviesApi))
+        moviesPresenter.initPresenter(this)
+        moviesPresenter.loadMovies()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        moviesPresenter.clearAll()
     }
 
     override fun onShowMovies(data: List<Movie>) {
+        movies.visibility = if (!data.isEmpty()) View.VISIBLE else View.GONE
         adapter.updateData(data)
     }
 

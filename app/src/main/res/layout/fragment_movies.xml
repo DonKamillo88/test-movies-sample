@@ -38,14 +38,14 @@
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:layout_centerInParent="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/top"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:visibility="gone" />
 
 </RelativeLayout>

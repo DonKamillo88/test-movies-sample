@@ -2,7 +2,7 @@ package com.kkk.movies
 
 import com.kkk.movies.data.model.Movie
 import com.kkk.movies.data.model.MoviesData
-import com.kkk.movies.data.remote.MoviesService
+import com.kkk.movies.data.remote.MoviesRepository
 import com.kkk.movies.ui.movies.MoviesMVP
 import com.kkk.movies.ui.movies.MoviesPresenter
 import io.reactivex.observers.DisposableObserver
@@ -17,7 +17,7 @@ import retrofit2.Response
 class MoviePresenterTest {
 
     private lateinit var SUT: MoviesMVP.Presenter
-    private var moviesService = Mockito.mock(MoviesService::class.java)
+    private var moviesService = Mockito.mock(MoviesRepository::class.java)
     private var mView: MoviesMVP.View = Mockito.mock(MoviesMVP.View::class.java)
 
     @Captor
@@ -27,12 +27,14 @@ class MoviePresenterTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        SUT = MoviesPresenter()
+        SUT = MoviesPresenter(moviesService)
     }
 
     @Test
     fun shouldShowMoviesWhenStartAndServiceCallSuccess() {
-        SUT.initPresenter(mView, moviesService)
+        SUT.initPresenter(mView)
+        SUT.loadMovies()
+
         Mockito.verify(moviesService, Mockito.times(1)).getMovies(any())
         Mockito.verify(moviesService).getMovies(capture(mCaptor))
 
@@ -50,6 +52,7 @@ class MoviePresenterTest {
         movie1.posterUrl = "https://raw.githubusercontent.com/cesarferreira/sample-data/master/public/posters/038022.jpg"
         movie1.title = "The Host"
         movie1.year = 2013
+
         val movie2 = Movie()
         movie2.id = 38023
         movie2.genre = "Fantasy"
@@ -62,15 +65,6 @@ class MoviePresenterTest {
 
         return Response.success(moviesData)
     }
-
-
-    /**
-     * Returns Mockito.eq() as nullable type to avoid java.lang.IllegalStateException when
-     * null is returned.
-     *
-     * Generic T is nullable because implicitly bounded by Any?.
-     */
-    fun <T> eq(obj: T): T = Mockito.eq<T>(obj)
 
 
     /**

@@ -2,28 +2,36 @@ package com.kkk.movies.ui.movies
 
 import android.util.Log
 import com.kkk.movies.data.model.MoviesData
-import com.kkk.movies.data.remote.MoviesService
+import com.kkk.movies.data.remote.MoviesRepository
 import io.reactivex.observers.DisposableObserver
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * @author DonKamillo on 22.08.2018.
  */
-class MoviesPresenter : MoviesMVP.Presenter {
+class MoviesPresenter @Inject constructor(private val moviesRepository: MoviesRepository) : MoviesMVP.Presenter {
 
-    lateinit var moviesService: MoviesService
     lateinit var view: MoviesMVP.View
+    private lateinit var handler: DisposableObserver<Response<MoviesData>>
 
-    override fun initPresenter(view: MoviesMVP.View, moviesService: MoviesService) {
+    override fun initPresenter(view: MoviesMVP.View) {
         this.view = view
-        this.moviesService = moviesService
-
-        loadMovies()
     }
 
-    private fun loadMovies() {
+    override fun loadMovies() {
         view.onShowProgressBar(true)
-        val handler = object : DisposableObserver<Response<MoviesData>>() {
+        handler = getMoviesHandler()
+        moviesRepository.getMovies(handler)
+    }
+
+    override fun clearAll() {
+        handler.dispose()
+    }
+
+    private fun getMoviesHandler(): DisposableObserver<Response<MoviesData>> {
+
+        return object : DisposableObserver<Response<MoviesData>>() {
             override fun onNext(response: Response<MoviesData>) {
 
                 if (response.raw().cacheResponse() != null) {
@@ -48,9 +56,5 @@ class MoviesPresenter : MoviesMVP.Presenter {
                 Log.d("Network", e.localizedMessage)
             }
         }
-
-        moviesService.getMovies(handler)
-
     }
-
 }

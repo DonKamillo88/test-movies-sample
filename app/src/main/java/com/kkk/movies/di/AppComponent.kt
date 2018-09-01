@@ -10,10 +10,8 @@ import javax.inject.Singleton
  * @author DonKamillo on 23.08.2018.
  */
 @Singleton
-@Component(modules = arrayOf(AndroidModule::class))
-interface ApplicationComponent {
-    fun inject(application: MyApplication)
-
-    fun inject(mainActivity: MainActivity)
+@Component(modules = [AppModule::class, ApiModule::class])
+interface AppComponent {
+    fun inject(app: MyApplication)
     fun inject(moviesFragment: MoviesFragment)
 }
